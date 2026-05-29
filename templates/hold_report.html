@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Overdue Hold Registry - AUTOAXIS</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; margin: 0; background: #fdf2f2; color: #1e293b; font-size: 12px; }
+        
+        .sidebar { width: 220px; height: 100vh; background: #1e1212; position: fixed; color: #ecf0f1; border-right: 3px solid #8B0000; }
+        .sidebar-brand { padding: 15px 10px; text-align: center; background: #140b0b; }
+        .sidebar-brand h2 { margin: 0; font-size: 15px; color: #fff; text-transform: uppercase; }
+        .sidebar-brand span { font-size: 9px; color: #ff9800; font-weight: bold; }
+        
+        .sidebar a { display: block; color: #94a3b8; text-decoration: none; padding: 10px 15px; font-size: 13px; }
+        .sidebar a:hover { background: rgba(255,255,255,0.02); color: #fff; }
+        .sidebar .back-btn { background: #8B0000 !important; color: white !important; font-weight: bold; text-align: center; margin: 15px; border-radius: 4px; padding: 10px; text-decoration: none; display: block;}
+
+        .main { margin-left: 220px; padding: 20px; }
+        .topbar { background: #fff; padding: 15px 25px; border-radius: 6px; margin-bottom: 15px; border-left: 5px solid #be123c; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+        .topbar h2 { margin: 0; font-size: 16px; color: #991b1b; text-transform: uppercase; font-weight: 800; }
+        
+        .box { background: #fff; padding: 20px; border-radius: 6px; border: 1px solid #fee2e2; }
+        
+        table { width: 100%; border-collapse: collapse; }
+        table th { background: #be123c; color: #ffffff; padding: 10px; font-size: 11px; text-transform: uppercase; border: 1px solid #991b1b; }
+        table td { padding: 10px; border: 1px solid #fee2e2; text-align: center; font-size: 12px; font-weight: 500; }
+        table tr:nth-child(even) { background-color: #fff5f5; }
+        
+        .day-counter-badge { background: #7f1d1d; color: #fef2f2; padding: 4px 8px; border-radius: 4px; font-weight: 800; font-size: 11px; display: inline-block; border: 1px solid #991b1b; }
+        .badge-hold { background: #1e1b4b; color: white; padding: 4px 6px; border-radius: 3px; font-weight: bold; }
+        .mini-btn-wa { background: #22c55e; color: white; text-decoration: none; padding: 4px 10px; border-radius: 3px; font-weight: bold; font-size: 10px; display: inline-block; }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="sidebar-brand">
+        <h2>Autoaxis</h2>
+        <span>Solution & Services LLP</span>
+    </div>
+    <a href="/dashboard" class="back-btn">⬅️ Back To Dashboard</a>
+</div>
+
+<div class="main">
+    <div class="topbar">
+        <h2>⚠️ RTO CRITICAL REGISTRY: 60+ DAYS OVERDUE AUDIT SHEET</h2>
+        <span style="color:#6b7280; font-weight: 500;">List of all pending agent files frozen due to execution latency exceeding two months.</span>
+    </div>
+
+    <div class="box">
+        <table>
+            <thead>
+                <tr>
+                    <th>Overdue Age</th>
+                    <th>Vehicle No</th>
+                    <th>Model</th>
+                    <th>Work Type</th>
+                    <th>Dealer Name</th>
+                    <th>Dealer Mobile</th>
+                    <th>File Created</th>
+                    <th>Remarks / Logs</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for e in entries %}
+                <tr>
+                    <td><span class="day-counter-badge">🔥 {{ e.days_old }} DAYS OLD</span></td>
+                    <td style="font-weight: 800; color: #991b1b;">{{ e.vehicle_no }}</td>
+                    <td style="font-weight: 600; color: #4b5563;">{{ e.vehicle_model or '-' }}</td>
+                    <td style="font-weight: bold; color: #0f172a;">{{ e.work_type }}</td>
+                    <td style="text-transform: uppercase; font-weight: bold;">{{ e.dealer }}</td>
+                    <td style="color:#2563eb; font-weight:600;">{{ e.dealer_mobile }}</td>
+                    <td>{{ e.created_date }}</td>
+                    <td style="color: #6b7280; font-style: italic;">{{ e.remarks or 'NO REMARKS RECORDED' }}</td>
+                    <td><span class="badge-hold">⚠️ HOLD</span></td>
+                    <td>
+                        <a href="https://wa.me/91{{ e.dealer_mobile }}?text=URGENT%20REMINDER:%20File%20for%20Vehicle%20{{ e.vehicle_no }}%20is%20stuck%20from%20{{ e.days_old }}%20Days.%20Clear%20documents%20immediately." target="_blank" class="mini-btn-wa">ALERT AGENT</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="10" style="color: #991b1b; padding: 30px; font-style: italic; font-weight: bold; font-size: 13px; text-align: center;">🎉 EXCELLENT! No overdue files frozen on Hold state today. All clean.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

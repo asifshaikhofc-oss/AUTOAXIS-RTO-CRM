@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Dealer Report</title>
+
+<style>
+
+body{
+    font-family:Arial;
+    background:#f4f6f9;
+    padding:30px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#8B0000;
+    color:white;
+    padding:12px;
+}
+
+td{
+    border:1px solid #ddd;
+    padding:12px;
+    text-align:center;
+}
+
+a{
+    text-decoration:none;
+    background:#8B0000;
+    color:white;
+    padding:10px 15px;
+    border-radius:5px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h2>Dealer Wise Report</h2>
+
+<br>
+
+<a href="/dashboard">Back Dashboard</a>
+
+<br><br>
+
+<table>
+
+<tr>
+<th>Dealer Name</th>
+<th>Total Files</th>
+</tr>
+
+{% for r in report %}
+
+<tr>
+<td>{{r[0]}}</td>
+<td>{{r[1]}}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+</body>
+</html>

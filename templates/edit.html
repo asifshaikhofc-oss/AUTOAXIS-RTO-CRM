@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Entry - AUTOAXIS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            width: 600px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #8B0000;
+            margin-top: 0;
+            border-bottom: 2px solid #8B0000;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #8B0000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #a50000;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #8B0000;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>✏️ Edit RTO Entry</h2>
+    <form method="POST">
+        
+        <div class="form-group">
+            <label>Old Owner Name:</label>
+            <input type="text" name="owner_name" value="{{ entry.owner_name }}" required>
+        </div>
+
+        <div class="form-group">
+            <label>New Owner Name:</label>
+            <input type="text" name="new_owner_name" value="{{ entry.new_owner_name or '' }}">
+        </div>
+
+        <div class="form-group">
+            <label>Vehicle Number:</label>
+            <input type="text" name="vehicle_no" value="{{ entry.vehicle_no }}" required>
+        </div>
+
+        <div class="form-group">
+            <label>Chassis Number:</label>
+            <input type="text" name="chassis_no" value="{{ entry.chassis_no or '' }}">
+        </div>
+
+        <div class="form-group">
+            <label>Work Type:</label>
+            <select name="work_type">
+                <option {% if entry.work_type == 'TO' %}selected{% endif %}>TO</option>
+                <option {% if entry.work_type == 'HPT' %}selected{% endif %}>HPT</option>
+                <option {% if entry.work_type == 'HPA' %}selected{% endif %}>HPA</option>
+                <option {% if entry.work_type == 'DRC' %}selected{% endif %}>DRC</option>
+                <option {% if entry.work_type == 'CA' %}selected{% endif %}>CA</option>
+                <option {% if entry.work_type == 'TO HPA' %}selected{% endif %}>TO HPA</option>
+                <option {% if entry.work_type == 'TO HPT HPA' %}selected{% endif %}>TO HPT HPA</option>
+                <option {% if entry.work_type == 'DRC HPT + HPA' %}selected{% endif %}>DRC HPT + HPA</option>
+                <option {% if entry.work_type == 'RMA' %}selected{% endif %}>RMA</option>
+                <option {% if entry.work_type == 'NEW REGISTRATION' %}selected{% endif %}>NEW REGISTRATION</option>
+                <option {% if entry.work_type == 'NEW PARMIT' %}selected{% endif %}>NEW PARMIT</option>
+                <option {% if entry.work_type == 'PARMIT CANCEL' %}selected{% endif %}>PARMIT CANCEL</option>
+                <option {% if entry.work_type == 'DUPLICATE PARMIT' %}selected{% endif %}>DUPLICATE PARMIT</option>
+                <option {% if entry.work_type == 'COLOUR CHANGE' %}selected{% endif %}>COLOUR CHANGE</option>
+                <option {% if entry.work_type == 'DEATH CASE' %}selected{% endif %}>DEATH CASE</option>
+                <option {% if entry.work_type == 'RRC' %}selected{% endif %}>RRC</option>
+                <option {% if entry.work_type == 'RRC + HPT' %}selected{% endif %}>RRC + HPT</option>
+                <option {% if entry.work_type == 'RRC + CA' %}selected{% endif %}>RRC + CA</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>RTO:</label>
+            <input type="text" name="rto" value="{{ entry.rto or '' }}">
+        </div>
+
+        <div class="form-group">
+            <label>Dealer:</label>
+            <input type="text" name="dealer" value="{{ entry.dealer or '' }}">
+        </div>
+
+        <div class="form-group">
+            <label>Old Mobile Number:</label>
+            <input type="text" name="old_mobile" value="{{ entry.old_mobile or '' }}">
+        </div>
+
+        <div class="form-group">
+            <label>New Mobile Number:</label>
+            <input type="text" name="new_mobile" value="{{ entry.new_mobile or '' }}">
+        </div>
+
+        <div class="form-group">
+            <label>Submission Date (DD-MM-YYYY):</label>
+            <input type="text" name="submission_date" value="{{ entry.submission_date or '' }}">
+        </div>
+
+        <div class="form-group">
+            <label>Status:</label>
+            <select name="status">
+                <option {% if entry.status == 'PENDING' %}selected{% endif %}>PENDING</option>
+                <option {% if entry.status == 'DONE' %}selected{% endif %}>DONE</option>
+                <option {% if entry.status == 'OVERDUE' %}selected{% endif %}>OVERDUE</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Remarks:</label>
+            <textarea name="remarks" rows="3">{{ entry.remarks or '' }}</textarea>
+        </div>
+
+        <button type="submit">🔄 UPDATE RTO RECORD</button>
+    </form>
+    
+    <a href="/dashboard" class="back-link">🔙 Cancel & Go Back</a>
+</div>
+
+</body>
+</html>
