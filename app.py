@@ -19,33 +19,30 @@ def get_db_connection():
 
 def init_db():
     conn = get_db_connection()
+    
+    # 1. Purani table (entries) waisi hi rahegi
     conn.execute('''
         CREATE TABLE IF NOT EXISTS entries (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             vehicle_no TEXT,
-            vehicle_model TEXT,
-            owner_name TEXT,
-            new_owner_name TEXT,
-            old_mobile TEXT,
-            new_mobile TEXT,
-            chassis_no TEXT,
-            engine_no TEXT,
-            rto TEXT,
-            dealer TEXT,
-            dealer_mobile TEXT,
-            submission_date TEXT,
-            work_type TEXT,
-            status TEXT,
-            remarks TEXT,
-            created_date TEXT,
-            challan_amt REAL DEFAULT 0,
-            puc_amt REAL DEFAULT 0,
-            insurance_amt REAL DEFAULT 0,
-            late_noc_amt REAL DEFAULT 0,
-            total_billing REAL DEFAULT 0,
-            received_amt REAL DEFAULT 0
+            ... (aapka pura purana code yahan rahega) ...
         )
     ''')
+    
+    # 2. YE NAYA KAAM HAI: Nayi table banani hai
+    conn.execute('''
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT UNIQUE,
+            password TEXT,
+            role TEXT
+        )
+    ''')
+    
+    # 3. Pehli baar admin aur staff ka account dal do
+    conn.execute("INSERT OR IGNORE INTO users (username, password, role) VALUES ('admin', 'admin123', 'admin')")
+    conn.execute("INSERT OR IGNORE INTO users (username, password, role) VALUES ('staff', 'staff123', 'staff')")
+    
     conn.commit()
     conn.close()
 
