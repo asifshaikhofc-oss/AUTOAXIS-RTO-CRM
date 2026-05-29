@@ -55,12 +55,18 @@ def home():
 def login():
     username = request.form.get('username', '').strip().lower()
     password = request.form.get('password', '')
-    if username == 'admin' and password == 'admin123':
-        session['user'] = 'admin'; session['role'] = 'admin'
+    
+    conn = get_db_connection()
+    # Database mein check kar rahe hain ki user aur password match karte hain ya nahi
+    user = conn.execute('SELECT * FROM users WHERE username = ? AND password = ?', (username, password)).fetchone()
+    conn.close()
+    
+    if user:
+        session['user'] = user['username']
+        session['role'] = user['role']
         return redirect(url_for('dashboard'))
-    elif username == 'staff' and password == 'staff123':
-        session['user'] = 'staff'; session['role'] = 'staff'
-        return redirect(url_for('dashboard'))
+    
+    flash('Invalid username or password!') # Galat password par message dikhayega
     return redirect(url_for('home'))
 
 @app.route('/dashboard')
